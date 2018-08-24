@@ -20,6 +20,13 @@ session_start();
      <font size="3" face="arial" color="white">UPLOAD NOTES上传笔记
 	</font></a>
 
+	&ensp;  &ensp; 
+
+	<a href="/logout.php">
+	<font size="3" face="arial" color="white">LOGOUT注销
+	</font></p>
+	</a>
+
 <br><br><br>
 <p style="text-align:center;">
 	<img src="avatar.png" width="200px," height="200px">
