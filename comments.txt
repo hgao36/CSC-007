@@ -1,0 +1,145 @@
+
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Latest Comments</h2>
+              <p class="card-text">
+
+
+
+
+          <?php 
+
+$servername = "bdm248126481.my3w.com";
+$username = "bdm248126481";
+$password = "12345678";
+$dbname = "bdm248126481_db";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+
+
+
+$sql = "SELECT user, text FROM comments";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+  
+    while($row = $result->fetch_assoc()) {
+        echo   $row["user"] .": ". $row["text"]. "<br>";
+    }
+} 
+$conn->close();
+
+
+
+
+        	?>
+
+
+
+
+
+
+
+
+              </p>
+            </div>
+            <div class="card-footer">
+
+
+
+
+            	<form method="post">
+
+	<label><input type="text" name="content"></label>
+
+    <button type="submit" name="submit">submit</button>
+</form>
+
+
+
+            
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+
+$servername = "bdm248126481.my3w.com";
+$username = "bdm248126481";
+$password = "12345678";
+$dbname = "bdm248126481_db";
+
+$cuser = $_SESSION['uid'];
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+
+
+if (isset($_POST['submit'])){
+
+
+
+
+$sql = "INSERT INTO comments (user, text, time)
+
+VALUES ('{$cuser}','{$_POST['content']}',CURRENT_TIMESTAMP )";
+
+
+
+
+	if ($conn->query($sql) === TRUE) {
+
+echo "success";
+
+
+
+
+} 
+
+}
+
+$conn->close();
+
+
+
+?>
+

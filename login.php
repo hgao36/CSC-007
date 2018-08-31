@@ -37,12 +37,13 @@ session_start();
     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="请输入密码" required>
     <br>
     <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block" type="submit" value="登陆">
+    <br>
+ <a href="/register.php">
+  <input  class="btn btn-lg btn-primary btn-block"  value="还没有账号？现在注册">
+</a>
 
 
-
-    <hr align="center" width="50%" />
-    <a href="/register.php">还没有账号？现在注册</a>
-    </hr>
+    
    </form>
   </div>
 
@@ -61,7 +62,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-echo "Connected successfully</br>";
+
 
 
 
@@ -82,12 +83,6 @@ if (isset($_POST['submit']))
     {
          header("Location: index.php"); 
          $_SESSION['uid']=$_POST['id'];
-   
-
-
-
-
-
 
     }
     else

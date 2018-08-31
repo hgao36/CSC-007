@@ -22,6 +22,53 @@ session_start();
     <!-- Custom styles for this template -->
     <link href="css/small-business.css" rel="stylesheet">
 
+
+  <style>
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 275px;
+    border-radius:5px;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+  border-radius:5px 5px 0px 0px;
+    width: 273px;
+    height: 275px;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+
+.bannerbox 
+{
+            width:100%;
+            position:relative;
+            overflow:hidden;
+            height:562px;
+}
+.banner 
+{
+            width:1920px; /*图宽*/
+            position:absolute;
+            left:50%;
+            margin-left:-960px; /*图宽的一半*/
+}
+
+
+
+</style>
+
+
+
   </head>
 
   <body>
@@ -29,14 +76,14 @@ session_start();
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#"><img src="/logo.png" width="30px," height="30px"> 学霸记</a>
+        <a class="navbar-brand" href="#"><img src="/logo.png" width="30px," height="30px"> StudyMaster</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">首页
+              <a class="nav-link" href="index.php">首页
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -48,7 +95,65 @@ session_start();
 
 
                   <li class="nav-item">
-              <a class="nav-link" href="upload.php">上传笔记</a>
+
+
+<?php
+
+
+
+ $servername = "bdm248126481.my3w.com";
+$username = "bdm248126481";
+$password = "12345678";
+$dbname = "bdm248126481_db";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+
+
+    $sql = "SELECT * FROM user WHERE id='{$_SESSION['uid']}'";
+
+    $result = $conn->query($sql);
+
+
+    if(empty($_SESSION['uid']))
+    {
+        echo ' <a class="nav-link" href="login.php">'; 
+    }
+
+
+
+while($row = $result->fetch_assoc())
+{
+
+   if($row['user_cat']==1||$row['user_cat']==2)
+    {
+          echo ' <a class="nav-link" href="apply.php">';
+    }
+
+   if($row['user_cat']==3)
+    {
+          echo ' <a class="nav-link" href="upload.php">';
+    }
+
+    if($row['user_cat']==4)
+    {
+          echo ' <a class="nav-link" href="personal.php">';
+    }
+
+}
+  
+$conn->close();
+
+?>
+
+
+             上传笔记</a>
             </li>
 
 
@@ -78,7 +183,7 @@ echo '<a class="nav-link" href="personal.php">';
             
 
                <li class="nav-item">
-              <a class="nav-link" href="mywork.php">                                 </a>
+              <a class="nav-link" href="personal.php">                                 </a>
             </li>
 
 
@@ -102,92 +207,41 @@ echo '<a href="/personal.php">';
       </div>
     </nav>
 
+     <div class="bannerbox">  
+           <div class="banner">  
+               <a href="/search.php">
+               <img src="/img/banner.jpg">  
+             </a>
+           </div>  
+       </div> 
+
     <!-- Page Content -->
     <div class="container">
 
       <!-- Heading Row -->
-      <div class="row my-4">
-        <div class="col-lg-8">
 
-      
-
-
-
-<br></br>
-          <img class="img-fluid rounded" src="http://csc412sfsu.com/~hhuang8/image.png" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <h1>Visitor history:</h1>
-
-
-
-          <?php 
-
-$servername = "bdm248126481.my3w.com";
-$username = "bdm248126481";
-$password = "12345678";
-$dbname = "bdm248126481_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-
-
-
-
-$sql = "SELECT id, log FROM csc412";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
-  
-    while($row = $result->fetch_assoc()) {
-        echo   "User [".$row["id"] ."] visited in ". $row["log"]. "."."<br>";
-    }
-} 
-$conn->close();
-
-
-
-
-        	?>
-
-
-          
-        </div>
-        <!-- /.col-md-4 -->
-      </div>
       <!-- /.row -->
 
       <!-- Call to Action Well -->
       <div class="card text-white bg-secondary my-4 text-center">
         <div class="card-body">
 
-<p class="text-white m-0">Generic page for csc412</p>
-        	
+<p class="text-white m-0">本周热门笔记</p>
+
           
         </div>
       </div>
 
       <!-- Content Row -->
       <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title">Latest Comments</h2>
-              <p class="card-text">
+       
 
 
+        <?php
 
+ 
 
-          <?php 
-
-$servername = "bdm248126481.my3w.com";
+ $servername = "bdm248126481.my3w.com";
 $username = "bdm248126481";
 $password = "12345678";
 $dbname = "bdm248126481_db";
@@ -202,100 +256,56 @@ if ($conn->connect_error) {
 
 
 
+    $sql2 = "SELECT * FROM notes WHERE if_show_homepage = 1";
 
-$sql = "SELECT user, text FROM comments";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
+    $result2 = $conn->query($sql2);
+    
+while($row2 = $result2->fetch_assoc())
+{
   
-    while($row = $result->fetch_assoc()) {
-        echo   $row["user"] .": ". $row["text"]. "<br>";
-    }
-} 
+  $intro = $row2['note_description'];
+
+  if(strlen($intro)>22)
+  {
+  $intro=substr($intro,0,22)."...";
+  }
+
+  $name = $row2['note_name'];
+
+  if(strlen($name)>20)
+  {
+  $name=substr($name,0,20)."...";
+  }
+
+
+
+      echo '<div class="gallery">
+  <a target="_blank" href="img/note_icon.jpg">
+    <img src="img/note_icon.jpg" alt="note" width="300" height="300"  >
+  </a>
+  <div class="desc"><strong><font size="4">'.$name.'
+  </font></strong></br>
+  介绍:'.$intro.'</br>$'.$row2['note_price'].'
+
+  </div>
+</div>';
+    
+
+}
+  
 $conn->close();
 
 
 
+        ?>
 
-        	?>
-
-
-
-
-
-
-
-
-              </p>
-            </div>
-            <div class="card-footer">
-
-
-
-
-            	<form method="post">
-
-	<label><input type="text" name="content"></label>
-
-    <button type="submit" name="submit">submit</button>
-</form>
-
-
-
-            
-            </div>
-          </div>
-        </div>
-
-
-
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title">About</h2>
-              <p class="card-text">Heqiang Huang, a student at SFSU, and this site is a practice site for CSC412 in Spring 2018...
-
-
-</p>
-            </div>
-            <div class="card-footer">
-			
-
-  <a href="http://csc412sfsu.com/~hhuang8/profile.php" class="btn btn-primary">More Info</a>
-
-
-            </div>
-          </div>
-        </div>
+      
+     
         <!-- /.col-md-4 -->
 
 
 
 
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title">Weather</h2>
-              <p class="card-text">
-
-
-<a class="weatherwidget-io" href="https://forecast7.com/en/37d77n122d42/san-francisco/" data-label_1="SAN FRANCISCO" data-label_2="WEATHER" data-days="3" data-theme="gray" >SAN FRANCISCO WEATHER</a>
-<script>
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-</script>
-</p>
-
-
-
-
-
-
-             </div>
-       
-          </div>
-        </div>
         <!-- /.col-md-4 -->
 
       </div>
@@ -303,11 +313,11 @@ $conn->close();
 
     </div>
     <!-- /.container -->
-
+  <br>
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Xuebaji 2018</p>
+        <p class="m-0 text-center text-white">Copyright&copy;  2017-2018   China XueBaJi   All Rights Reserved  </p>
       </div>
       <!-- /.container -->
     </footer>
@@ -317,55 +327,6 @@ $conn->close();
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-
-<?php
-
-
-$servername = "bdm248126481.my3w.com";
-$username = "bdm248126481";
-$password = "12345678";
-$dbname = "bdm248126481_db";
-
-$cuser = $_SESSION['uid'];
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-
-
-
-if (isset($_POST['submit'])){
-
-
-
-
-$sql = "INSERT INTO comments (user, text, time)
-
-VALUES ('{$cuser}','{$_POST['content']}',CURRENT_TIMESTAMP )";
-
-
-
-
-	if ($conn->query($sql) === TRUE) {
-
-echo "success";
-
-
-
-
-} 
-
-}
-
-$conn->close();
-
-
-
-?>
 
 
 
